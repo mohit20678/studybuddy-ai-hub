@@ -2,10 +2,10 @@ import urllib.parse
 import requests
 import streamlit as st
 from groq import Groq
-from style import (load_css, load_extras, hero, cards, cursor_glow,
+from style import (scroll_bottom, load_css, load_extras, hero, cards, cursor_glow,
                    IMG_PLACEHOLDER, VIDEO_CARD)
 
-st.set_page_config(page_title="Study Buddy", page_icon="📚")
+st.set_page_config(page_title="Study Buddy", page_icon="📚", layout="wide")
 load_css()
 load_extras()
 cursor_glow()
@@ -21,7 +21,7 @@ if not st.session_state.authed:
     st.stop()
 
 client = Groq(api_key=st.secrets["GROQ_API_KEY"])
-MODEL = "llama-3.3-70b-versatile"  # if it errors, check Groq's model list for a current name
+MODEL = "openai/gpt-oss-120b"
 
 SYSTEM_PROMPT = (
     "You are a friendly college study assistant. Explain concepts step by step "
@@ -59,6 +59,8 @@ with tab_chat:
                 chunk.choices[0].delta.content or "" for chunk in stream
             )
         st.session_state.messages.append({"role": "assistant", "content": reply})
+        scroll_bottom()
+        scroll_bottom()
 
 # ---------------- IMAGES ----------------
 with tab_img:

@@ -332,3 +332,137 @@ VIDEO_CARD = (
 
 def load_extras():
     st.markdown(EXTRAS, unsafe_allow_html=True)
+
+
+FIX = """
+<style>
+[data-testid="stBottom"], [data-testid="stBottomBlockContainer"] {
+    z-index: 50 !important; background: transparent !important;
+}
+[data-testid="stChatInput"] {
+    position: relative; z-index: 60 !important; pointer-events: auto !important;
+}
+[data-testid="stChatInput"] * { pointer-events: auto !important; }
+[data-testid="stChatInput"] textarea {
+    color: #ffffff !important; caret-color: #22d3ee !important;
+    background: transparent !important;
+}
+</style>
+"""
+
+
+def load_extras():
+    st.markdown(EXTRAS + FIX, unsafe_allow_html=True)
+
+
+WIDE = """
+<style>
+/* Use almost the full screen on every tab */
+[data-testid="stMainBlockContainer"], [data-testid="stAppViewBlockContainer"], .block-container {
+    max-width: 1600px !important; width: 96% !important;
+    padding-left: 2rem !important; padding-right: 2rem !important;
+}
+/* Question box at the bottom matches the same width */
+[data-testid="stBottomBlockContainer"] {
+    max-width: 1600px !important; width: 96% !important;
+    padding-left: 2rem !important; padding-right: 2rem !important;
+}
+
+/* Chat messages: no colored line, no glow */
+[data-testid="stChatMessage"], [data-testid="stChatMessage"]:hover {
+    border: none !important; box-shadow: none !important;
+    background: rgba(255,255,255,0.045) !important;
+}
+[data-testid="stChatMessage"]:hover { transform: none !important; }
+</style>
+"""
+
+
+def load_extras():
+    st.markdown(EXTRAS + FIX + WIDE, unsafe_allow_html=True)
+
+
+PIN = """
+<style>
+/* Question box pinned to the bottom of the screen */
+[data-testid="stChatInput"] {
+    position: fixed !important; bottom: 24px !important; left: 0 !important; right: 0 !important;
+    margin: 0 auto !important; width: min(94%, 1500px) !important; z-index: 100 !important;
+    transform: none !important;
+}
+
+/* Plain border: no rainbow, no glow, no animation */
+[data-testid="stChatInput"], [data-testid="stChatInput"]:hover, [data-testid="stChatInput"]:focus-within {
+    border: 1px solid rgba(255,255,255,0.18) !important;
+    background: #0d0d14 !important;
+    animation: none !important; box-shadow: none !important; transform: none !important;
+    border-radius: 18px !important;
+}
+[data-testid="stChatInput"]:focus-within { border-color: rgba(255,255,255,0.45) !important; }
+
+/* Soft dark fade under the box so messages don't clash with it */
+.stApp::after {
+    content: ""; position: fixed; left: 0; right: 0; bottom: 0; height: 120px;
+    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.9) 65%);
+    z-index: 90; pointer-events: none;
+}
+
+/* Space at the bottom so the last message is never hidden */
+[data-testid="stMainBlockContainer"], .block-container { padding-bottom: 150px !important; }
+</style>
+"""
+
+
+def load_extras():
+    st.markdown(EXTRAS + FIX + WIDE + PIN, unsafe_allow_html=True)
+
+
+def scroll_bottom():
+    components.html(
+        """<script>
+        const m = window.parent.document.querySelector('[data-testid="stMain"]');
+        if (m) { m.scrollTo({ top: m.scrollHeight, behavior: 'smooth' }); }
+        </script>""",
+        height=0,
+    )
+
+
+VISIBLE = """
+<style>
+/* Remove the fade that was covering the box */
+.stApp::after { display: none !important; content: none !important; }
+
+/* Bottom bar sits above everything */
+[data-testid="stBottom"], [data-testid="stBottomBlockContainer"] {
+    z-index: 999 !important; background: transparent !important;
+}
+
+/* A clear, bright chat box like ChatGPT */
+[data-testid="stChatInput"] {
+    z-index: 1000 !important; opacity: 1 !important;
+    bottom: 28px !important;
+    background: #17171f !important;
+    border: 1px solid rgba(255,255,255,0.28) !important;
+    border-radius: 26px !important;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6) !important;
+}
+[data-testid="stChatInput"] > div, [data-testid="stChatInput"] div {
+    background: transparent !important;
+}
+[data-testid="stChatInput"] textarea {
+    color: #ffffff !important; font-size: 1rem !important;
+    min-height: 34px !important; padding-top: 10px !important;
+}
+[data-testid="stChatInput"] textarea::placeholder {
+    color: #a1a1b5 !important; opacity: 1 !important;
+}
+[data-testid="stChatInput"] button {
+    background: #ffffff !important; color: #000000 !important; border-radius: 50% !important;
+}
+[data-testid="stChatInput"] button svg { fill: #000000 !important; }
+</style>
+"""
+
+
+def load_extras():
+    st.markdown(EXTRAS + FIX + WIDE + PIN + VISIBLE, unsafe_allow_html=True)
