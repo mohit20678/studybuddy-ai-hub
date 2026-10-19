@@ -21,7 +21,7 @@ if not st.session_state.authed:
     st.stop()
 
 client = Groq(api_key=st.secrets["GROQ_API_KEY"])
-MODELS = ["openai/gpt-oss-120b", "openai/gpt-oss-20b"]  # second one is the backup
+MODELS = ["openai/gpt-oss-20b", "openai/gpt-oss-120b"]  # fast first, smarter as backup
 
 BASE = "You are a friendly college study assistant. "
 MODES = {
@@ -57,7 +57,8 @@ def stream_reply(messages):
     for model in MODELS:
         try:
             stream = client.chat.completions.create(
-                model=model, messages=messages, stream=True
+                model=model, messages=messages, stream=True,
+                reasoning_effort="low",
             )
             for chunk in stream:
                 if chunk.choices and chunk.choices[0].delta.content:
