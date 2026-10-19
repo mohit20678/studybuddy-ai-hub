@@ -466,3 +466,24 @@ VISIBLE = """
 
 def load_extras():
     st.markdown(EXTRAS + FIX + WIDE + PIN + VISIBLE, unsafe_allow_html=True)
+
+
+PILLS = """
+<style>
+[data-testid="stBaseButton-pills"], [data-testid="stBaseButton-pillsActive"] {
+    border-radius: 999px !important; padding: 8px 18px !important; font-weight: 600 !important;
+    border: 1px solid rgba(255,255,255,.18) !important; background: rgba(255,255,255,.05) !important;
+    transition: transform .25s ease, box-shadow .25s ease, background .25s ease !important;
+}
+[data-testid="stBaseButton-pills"]:hover { transform: translateY(-3px) scale(1.04);
+    background: rgba(139,92,246,.22) !important; box-shadow: 0 8px 22px rgba(139,92,246,.4); }
+[data-testid="stBaseButton-pillsActive"] {
+    background: linear-gradient(135deg, #7c3aed, #06b6d4) !important; color: #fff !important;
+    border-color: transparent !important; box-shadow: 0 0 22px rgba(124,58,237,.6);
+}
+</style>
+"""
+
+
+def load_extras():
+    st.markdown(EXTRAS + FIX + WIDE + PIN + VISIBLE + PILLS, unsafe_allow_html=True)
